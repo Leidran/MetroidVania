@@ -7,7 +7,8 @@ public class BetterPlayerController : MonoBehaviour
 {
     //Estats de moviment
     bool dashing = false;
-    bool jumpCapable = false;
+    bool grounded = false;
+    IEnumerator dashTimeCorutine; //Necessari per a fer que el dash trigui una duracip predeterminada, si no, poden haber errors a l'hora de començcar i parar aquesta corutina
 
     //Stats basis del jugador
     float defaultSpeedMultiplier = 1f; //El multiplicador per defecte quan el jugador nomes es mou
@@ -22,6 +23,7 @@ public class BetterPlayerController : MonoBehaviour
     Rigidbody2D rb2D;
     Collider2D coll2D;
     [SerializeField] LayerMask floorLayers;
+
 
     void Start()
     {
@@ -45,7 +47,7 @@ public class BetterPlayerController : MonoBehaviour
         //Vertical
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (jumpCapable)
+            if (grounded)
             {
                 inputForce.y = jumpPower;
             }
@@ -62,10 +64,10 @@ public class BetterPlayerController : MonoBehaviour
     {
         //jumpCapable check
         RaycastHit2D hit2D = Physics2D.BoxCast(transform.position + feetPosition, new Vector2(coll2D.bounds.size.x, 0.1f), 0f, Vector2.down, 0.1f, floorLayers);
-        jumpCapable = hit2D;
+        grounded = hit2D;
 
         //dash check, si el jugador no esta en l'aire, independenment de si esta fent un dash, la seva velocitat incrementada es mantindra
-        if (jumpCapable)
+        if (grounded)
         {
             speedMultiplier = dashing ? dashSpeedMultiplier : defaultSpeedMultiplier;
         }
@@ -76,6 +78,23 @@ public class BetterPlayerController : MonoBehaviour
     public void modifyDashState(bool state)
     { 
         dashing = state;
+        if (state)
+        {
+            dashTimeCorutine = dashTime(); //Si no li tornem a donar el IEnumerator, no podem a tornar a fer un nou dashTime, per alguna rao, Unity logic, suposo
+            StartCoroutine(dashTimeCorutine);
+        }
+        else
+        {
+            StopCoroutine(dashTimeCorutine);
+        }
+    }
+
+    //IEnumerators i timers
+
+    IEnumerator dashTime() //Fa que el dash duri nomes un segon, fins i tot quan seguim mantenint el boto de dash
+    {
+        yield return new WaitForSeconds(0.5f);
+        dashing = false;
     }
 
     //Implementations
