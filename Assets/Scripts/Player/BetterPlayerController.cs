@@ -26,7 +26,6 @@ public class BetterPlayerController : MonoBehaviour
     Collider2D coll2D;
     [SerializeField] LayerMask floorLayers;
 
-
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
