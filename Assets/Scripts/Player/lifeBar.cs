@@ -5,24 +5,21 @@ using UnityEngine.UI;
 
 public class lifeBar : MonoBehaviour
 {
-    public Image LifeBar;
+    public int life = 3;
 
-    public float actualLife;
+    private void Start()
+    {
+        
+    }
 
-    public float maximumLife;
 
-    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (life <= 0)
         {
-            damage(1);
+            GameOver.show();
         }
     }
 
-    public void damage(float damage)
-    {
-        actualLife = actualLife - damage;
-        LifeBar.fillAmount = actualLife / maximumLife;
-    }
+    
 }
