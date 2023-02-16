@@ -6,6 +6,7 @@ using UnityEngine;
 public class BetterPlayerController : MonoBehaviour
 {
     //Estats de moviment
+    int direction = 1;
     bool dashing = false;
     bool airDashing = false;
     bool grounded = false;
@@ -44,6 +45,7 @@ public class BetterPlayerController : MonoBehaviour
     void Movement()
     {
         //Horizontal
+        direction = Input.GetAxisRaw("Horizontal") != 0 ? (int)Input.GetAxisRaw("Horizontal") : direction;
         inputForce.x = Input.GetAxisRaw("Horizontal") * (horizontalVel * speedMultiplier);
         
         //Vertical
@@ -101,6 +103,13 @@ public class BetterPlayerController : MonoBehaviour
         dashing = false;
         airDashing = false;
     }
+
+    //Setters & Getters
+    public int GetDirection()
+    {
+        return direction;
+    }
+
 
     //Implementations
     public object SaveState()
