@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerObjects : MonoBehaviour
 {
-    [SerializeField] public GameObject projectileLong;
+    [SerializeField] public GameObject projectileLong, projectileShort;
 }

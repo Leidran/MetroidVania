@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongProjectileBehaviour : MonoBehaviour
+public class ShortProjectileBehaviour : MonoBehaviour
 {
     float timeAlive = 0f;
-    float maxTimeAlive = 4f;
+    float maxTimeAlive = 0.2f;
 
     Rigidbody2D rb2D;
     [SerializeField] LayerMask floorLayer;
@@ -27,7 +27,6 @@ public class LongProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Ball collission trigger");
         if (collision.tag == "Floor")
         {
             Destroy(gameObject);
