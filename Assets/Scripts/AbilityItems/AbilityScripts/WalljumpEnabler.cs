@@ -14,6 +14,7 @@ public class WalljumpEnabler : MonoBehaviour
     {
         coll2D = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
+        floorLayer |= (1 << LayerMask.NameToLayer("Floor"));
 
         collBounds = new Vector3(0.1f, coll2D.size.y, 0);
         boxPosLeft = new Vector3(coll2D.size.x * -0.5f, 0, 0);
@@ -23,10 +24,13 @@ public class WalljumpEnabler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Physics2D.BoxCast(transform.position + boxPosLeft, collBounds, 0f, Vector2.left, 0f, floorLayer) ||
-                Physics2D.BoxCast(transform.position + boxPosRight, collBounds, 0f, Vector2.right, 0f, floorLayer))
+            if (Physics2D.BoxCast(transform.position + boxPosLeft, collBounds, 0f, Vector2.left, 0f, floorLayer) 
+                && Input.GetAxisRaw("Horizontal") < 0
+                ||
+                Physics2D.BoxCast(transform.position + boxPosRight, collBounds, 0f, Vector2.right, 0f, floorLayer)
+                && Input.GetAxisRaw("Horizontal") > 0)
             {
-                inputForce.y = 2f;
+                inputForce.y = 4f;
                 inputForce.x = rb2D.velocity.x;
 
                 rb2D.velocity = inputForce;

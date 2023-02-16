@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a878ba3180669e841835843bf5deb887, type: 3}
   m_Name: TestAbility
   m_EditorClassIdentifier: 
-  abilityScript: {fileID: 11500000, guid: ae1016cab0aea7c488f2083ba1cc9313, type: 3}
+  abilityScript: {fileID: 11500000, guid: e6efca98dfe66204cb992d28d74183d2, type: 3}
   abilitySprite: {fileID: 21300000, guid: d27fa8b4ae26976498969b819076949d, type: 3}
